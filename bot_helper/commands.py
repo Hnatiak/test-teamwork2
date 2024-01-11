@@ -10,18 +10,29 @@ NAME_COMMANDS = {
     "hello": handler_hello,
     "add": handler_add,
     "change": handler_change,
-    "showall": handler_show_all,
+    "show-all": handler_show_all,
     "goodbye": handler_exit,
     "close": handler_exit,
     "exit": handler_exit,
     "find": handler_find,
-    "delete telephone": handler_delete_phone,
-    "deleteuser": handler_delete_user,
-    "next birthday": handler_next_birthday
+    "delete-telephone": handler_delete_phone,
+    "delete-user": handler_delete_user,
+    "next-birthday": handler_next_birthday
 }
 
+# def get_command_suggestions(prefix):
+    # suggestions = [cmd for cmd in NAME_COMMANDS.keys() if prefix.lower() in cmd.lower()]
+    # formatted_suggestions = "\n".join(f"{' ' * 60}| {cmd} |" for cmd in suggestions)
+    # user_input = prompt(f"Please enter your command: ", completer=WordCompleter(suggestions, ignore_case=True))
+    # return user_input.lower()
+
+
 def get_command_suggestions(prefix):
-    suggestions = [cmd for cmd in NAME_COMMANDS.keys() if prefix.lower() in cmd.lower()]
-    formatted_suggestions = "\n".join(f"{' ' * 60}| {cmd} |" for cmd in suggestions)
-    user_input = prompt(f"Please enter your command: ", completer=WordCompleter(suggestions, ignore_case=True))
-    return user_input.lower()
+    try:
+        suggestions = [cmd for cmd in NAME_COMMANDS.keys() if prefix.lower() in cmd.lower()]
+        formatted_suggestions = "\n".join(f"{' ' * 60}| {cmd} |" for cmd in suggestions)
+        user_input = prompt(f"Please enter your command: ", completer=WordCompleter(suggestions, ignore_case=True))
+        return user_input.lower()
+    except KeyboardInterrupt:
+        print("\nCommand input interrupted. Exiting...")
+        exit()

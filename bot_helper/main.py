@@ -3,6 +3,8 @@ from commands import *
 from termcolor import colored, cprint
 from tabulate import tabulate
 from datetime import date
+from schema import help_table
+
 
 def input_error(func):
     def inner(my_book, val):
@@ -58,7 +60,7 @@ def handler_show_all(my_book, _=None):
     for record in my_book:
         name = record.name.value
         phones = ', '.join(p.value for p in record.phones)
-        email = ''  # You can fill this with the actual email if you have it
+        email = ''
         birthday = date.strftime(record.birthday.value, '%d.%m.%Y') if hasattr(record, "birthday") else ''
         table_data.append([name, phones, email, birthday])
 
@@ -85,7 +87,6 @@ def handler_delete_phone(my_book, list_):
     return cprint(f"Phone {list_[1]} of user {list_[0].capitalize()} successfully deleted", 'green')
 
 def handler_delete_user(my_book, list_):
-    print(list_[0].capitalize())
     my_book.delete(list_[0].capitalize())
     return cprint(f"User {list_[0].capitalize()} successfully deleted", 'green')
 
@@ -95,33 +96,9 @@ def handler_next_birthday(my_book, list_):
     return cprint(f"Next birthday for user {list_[0].capitalize()} after {days} days", 'blue')
 
 def handler_help(my_book=None, _=None):
-    help_string = '''
-        Hello, you can use the following commands with the given format:
+    formatted_table = tabulate(help_table, headers="firstrow", tablefmt="presto", numalign="center")
 
-        Command                                  | Description
-        help                                     | Display this help message
-        hello                                    | Greet the bot
-        add <user_name> <phone> [birthday]        | Add a user to the address book
-        change <user_name> <phone_to_change> <phone_to_change_to> | Change a phone number
-        show all                                 | Show all records in a table
-        goodbye | close | exit                   | Exit the application
-        find <some_letters> | <some_numbers>     | Find a record by name or phone
-        delete phone <user_name> <phone>         | Delete a phone from a user
-        delete user <user_name>                  | Delete a user from the address book
-
-        Variation format for telephone number:
-        +38(055)111-22-33
-        38(055)111-22-34
-        8(055)111-22-35
-        (055)111-22-36
-        055111-22-37
-        and all variants without "-"
-        '''
-
-    # Convert the help string to a table
-    table = tabulate([[line.strip()] for line in help_string.split('\n') if line.strip()], tablefmt="grid")
-
-    return cprint(table, 'blue')
+    return cprint(formatted_table, 'blue')
 
 @input_error
 def parser_command(my_book, command):
@@ -143,12 +120,6 @@ def main():
     my_book_j = book.AddressBook()
     my_book = my_book_j.load_from_file_json(file_name_j)
     
-    
-    test_user = book.Record("Test User", "01.01.2000")
-    test_user.add_phone("1234567890")
-    test_user.add_phone("+380987654321")
-    my_book.add_record(test_user)
-    
     while True:
         user_input = get_command_suggestions("")
         ret_result = parser_command(my_book, user_input)
@@ -159,6 +130,5 @@ def main():
                 my_book.save_to_file_json(file_name_j)
                 exit()
                 
-
 if __name__ == "__main__":
     main()
