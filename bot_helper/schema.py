@@ -10,7 +10,7 @@ help_table = [
     ["find", "<some_letters>", "<some_numbers>", "", "Find a record by name or phone"],
     ["delete-phone", "<user_name>", "<phone>", "", "Greet the bot"],
     ["delete-user", "<user_name>", "", "", "Delete a user from the address book"],
-    ["next-birthday", "<user_name>", "", "", "Delete a user from the address book"],
+    ["next-birthday", "<user_name>", "", "", "To find out when the user's birthday is"],
     ["", "", "Variation format for telephone number:", "", ""],
     ["+38(055)111-22-33", "", "", "", "", ""],
     ["38(055)111-22-34", "", "", "", "", ""],

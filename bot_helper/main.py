@@ -97,7 +97,6 @@ def handler_next_birthday(my_book, list_):
 
 def handler_help(my_book=None, _=None):
     formatted_table = tabulate(help_table, headers="firstrow", tablefmt="presto", numalign="center")
-
     return cprint(formatted_table, 'blue')
 
 @input_error
