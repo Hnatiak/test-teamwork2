@@ -15,9 +15,9 @@ NAME_COMMANDS = {
     "close": handler_exit,
     "exit": handler_exit,
     "find": handler_find,
-    "deletephone": handler_delete_phone,
+    "delete telephone": handler_delete_phone,
     "deleteuser": handler_delete_user,
-    "nextbirthday": handler_next_birthday
+    "next birthday": handler_next_birthday
 }
 
 def get_command_suggestions(prefix):

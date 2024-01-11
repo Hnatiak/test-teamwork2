@@ -159,16 +159,23 @@ class Record:
         today = Birthday(date.today().strftime("%Y %m %d"))
         return self.birthday - today
 
-    def __str__(self):
+    # def __str__(self):
     
+    #     if hasattr(self, "birthday"):
+    #         return f"Contact name: {self.name.value}, phones: {', '.join(p.value for p in self.phones)}, birthday: {date.strftime(self.birthday.value, '%d.%m.%Y')}"
+    #     else:
+    #         return f"Contact name: {self.name.value}, phones: {', '.join(p.value for p in self.phones)}"
+    def __str__(self):
+        phones_str = ', '.join(p.value for p in self.phones)
         if hasattr(self, "birthday"):
-            return f"Contact name: {self.name.value}, phones: {', '.join(p.value for p in self.phones)}, birthday: {date.strftime(self.birthday.value, '%d.%m.%Y')}"
+            birthday_str = date.strftime(self.birthday.value, '%d.%m.%Y')
+            return f"Contact name: {self.name.value}, phones: {phones_str}, birthday: {birthday_str}"
         else:
-            return f"Contact name: {self.name.value}, phones: {', '.join(p.value for p in self.phones)}"
+            return f"Contact name: {self.name.value}, phones: {phones_str}"
         
 
 class AddressBook(UserDict):
-    qua_for_iter = 2
+    qua_for_iter = 1
     list_for_iter = []
 
     def add_record(self, record):
@@ -222,7 +229,7 @@ class AddressBook(UserDict):
         return f"{'; '.join(i for i in for_return)} \n"
 
     def __iter__(self):
-        return self
+        return iter(self.data.values())
     
     def save_to_file_pickle(self, file_name):
         with open(file_name, 'wb') as file:
